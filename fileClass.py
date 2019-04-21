@@ -11,12 +11,23 @@ Config = {
     "YELLOW": '\033[33m',
     "BLACK": '\033[30m',
     "WHITE": '\033[37m',
+
     'NEGRITO': '\033[1m',
-    'RESET': '\033[0;0m'
+    'RESET': '\033[0;0m',
+
+    "namePlayer": 0,
+    "nameAdv":1,
+    "DNA":2,
+    "nRodadas":3,
+    "damage":4,
+    "vitorias":5,
+    "derotas":6
+
 }
 
 
 class System:
+
     @staticmethod
     def listPlayer():
         return ["Ichigo Kurosaki", "Killer Bee", "Xena", "Roronoa Zoro", "Gohan"]
