@@ -20,10 +20,10 @@ class Strategy:
             -Se a estratégia ultrapassar o numero previsto de jogadas ele retona -1
         :return: int
         """
-        if self.apontador > self.rodadas:
+        if self.apontador > len(self.DNA)-2:
             return -1
         self.apontador += 1
-        return self.DNA[self.apontador]
+        return int(self.DNA[self.apontador])
 
     def sumDamage(self, damage):
         self.damage += damage
@@ -64,7 +64,7 @@ class DAOStrategy:
         :param strategy: Strategy
         :return: void
         """
-        infoStrategy = f"{strategy.player}-{strategy.adv}-{strategy.DNA}-{strategy.rodadas}-{strategy.damage}-{strategy.vitorias}-{strategy.derotas}"
+        infoStrategy = f"\n{strategy.player}-{strategy.adv}-{strategy.DNA}-{strategy.rodadas}-{strategy.damage}-{strategy.vitorias}-{strategy.derotas}"
         arq = open(self.TXT, 'r')
         conteudo = arq.readlines()
         conteudo.append(infoStrategy)
@@ -81,12 +81,29 @@ class DAOStrategy:
             if listInfo[Config["namePlayer"]] == namePlayer and listInfo[Config["nameAdv"]] == nameAdv:
                 arq.close()
                 return Strategy(listInfo[Config["namePlayer"]], listInfo[Config["nameAdv"]], listInfo[Config["DNA"]],
-                                listInfo[Config["nRodadas"]], listInfo[Config["damage"]], listInfo[Config["vitorias"]],
-                                listInfo[Config["derotas"]])
+                                int(listInfo[Config["nRodadas"]]), int(listInfo[Config["damage"]]), int(listInfo[Config["vitorias"]]),
+                                int(listInfo[Config["derotas"]]))
         arq.close()
         return None
 
+    def setStrategy(self, strategy):
+        infoStrategy = f"{strategy.player}-{strategy.adv}-{strategy.DNA}-{strategy.rodadas}-{strategy.damage}-{strategy.vitorias}-{strategy.derotas}"
+        arq = open(self.TXT,'r')
+        conteudo = arq.readlines()
+        conteudoAux = str()
+        for i in conteudo:
+            info = i.split("-")
+            if info[Config["namePlayer"]] == strategy.player and info[Config["nameAdv"]] == strategy.adv:
+                conteudoAux += f'{infoStrategy}\n'
+            else:
+                conteudoAux += f'{i}'
+        arq = open(self.TXT,'w')
+        arq.writelines(conteudoAux)
+        arq.close()
 
-est = Strategy("Jhonatan", "Jhean", "01110111", 5, 500, 0, 0)
+
+est = Strategy("Jhonatan", "Hiago", "0", 1000, 880, 0, 0)
 dao = DAOStrategy()
-print(dao.getStrategy("Jhonatan","Jhean").DNA)
+StrategyOld = dao.getStrategy("Jhonatan", "Hiago")
+for i in range(15):
+    print(StrategyOld.getProtein())
