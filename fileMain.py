@@ -1,5 +1,5 @@
 from fileClass import Player,InteligencePlayer,System
-System.print('''
+System.print(''' teste
 MODO é DO JOGO 
     0 - Player x Player
     1 - Player x BOT''','NEGRITO')
